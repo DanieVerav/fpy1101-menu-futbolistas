@@ -1,0 +1,146 @@
+futbolistas = []
+nombre=""
+posicion=""
+edad=0
+goles=0
+opcion=0
+
+def agregar_futbolista(nombre, posicion, edad, goles): # este def se encarga de agregar un nuevo futbolista 
+
+    
+    for jugador in futbolistas: #con esta opcion hace que recorra la lista en busca de  algun nombre repetido
+        if jugador["nombre"].lower() == nombre.lower():
+            print("Ese futbolista ya existe.")
+            return 
+
+   
+    futbolista = { #agrega el futbolista a un diccionario
+        "nombre": nombre,
+        "posicion": posicion,
+        "edad": edad,
+        "goles": goles
+    }
+
+    futbolistas.append(futbolista)  #agrega el diccionario a la lista de futbolistas
+    print(f"Futbolista '{nombre}' agregado correctamente.")
+
+
+
+def mostrar_futbolistas(): #este def se encarga de que muestre el listado de los futbolistas creados
+
+    if len(futbolistas) == 0:  
+        print("No hay futbolistas registrados.")
+    else:
+        print("\n------ FUTBOLISTAS ------")
+
+       
+        for jugador in futbolistas: #recorre los futbolistas de la lista 
+            print(f"Nombre: {jugador['nombre']}")
+            print(f"Posición: {jugador['posicion']}")
+            print(f"Edad: {jugador['edad']}")
+            print(f"Goles: {jugador['goles']}")
+            print("------------------------")
+
+
+
+def actualizar_futbolista(nombre):#esta opcion sirve para modificar los datos del futbolista
+
+    
+    for jugador in futbolistas: # recorre buscando al futbolista en base a su nombre 
+        if jugador["nombre"].lower() == nombre.lower():
+
+            nueva_posicion = input("Nueva posición: ").strip()
+
+            try:
+                nueva_edad = int(input("Nueva edad: "))  
+                nuevos_goles = int(input("Nuevos goles: "))  
+
+            except ValueError: #captura errores,ayuda a que el programa no crashe
+                print("Error: edad y goles deben ser números.")
+                return
+
+            
+            jugador["posicion"] = nueva_posicion
+            jugador["edad"] = nueva_edad
+            jugador["goles"] = nuevos_goles
+
+            print("Futbolista actualizado correctamente.")
+            return
+
+    print("Futbolista no encontrado.")
+
+
+def eliminar_futbolista(nombre): # funcion para eliminar a un futbolista
+
+    
+    for jugador in futbolistas:
+        if jugador["nombre"].lower() == nombre.lower():
+
+            futbolistas.remove(jugador)  
+            print("Futbolista eliminado correctamente.")
+            return
+
+    print("Futbolista no encontrado.")
+
+
+
+
+while True:
+
+    print("\n======= MENU =======")
+    print("1. Mostrar futbolistas")
+    print("2. Agregar futbolista")
+    print("3. Actualizar futbolista")
+    print("4. Eliminar futbolista")
+    print("5. Salir")
+
+    try:
+        opcion = int(input("Elige una opción: ")) 
+
+    except ValueError: 
+        print("Debes ingresar un número.")
+        continue 
+
+    if opcion == 1:
+        mostrar_futbolistas()
+
+    elif opcion == 2:
+
+        nombre = input("Nombre: ").strip()
+        posicion = input("Posición: ").strip()
+
+        
+        if nombre == "" or posicion == "":
+            print("No se permiten campos vacíos.")
+            continue
+
+        try:
+            edad = int(input("Edad: ")) 
+            goles = int(input("Cantidad de goles: ")) 
+
+        except ValueError:
+            print("Edad y goles deben ser números.")
+            continue
+
+        agregar_futbolista(nombre, posicion, edad, goles)
+
+  
+    elif opcion == 3:
+
+        nombre = input("Nombre del futbolista a actualizar: ").strip()
+        actualizar_futbolista(nombre)
+
+  
+    elif opcion == 4:
+
+        nombre = input("Nombre del futbolista a eliminar: ").strip()
+        eliminar_futbolista(nombre)
+
+    
+    elif opcion == 5:
+
+        print("Saliendo del programa...")
+        break
+
+   
+        print("Opción no válida. Debe ser entre 1 y 5.")
